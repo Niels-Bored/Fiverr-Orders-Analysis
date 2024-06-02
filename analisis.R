@@ -41,9 +41,3 @@ unique_classes <- function(column) {
 tipos_de_datos_por_columna <- lapply(dataset, unique_classes)
 
 print(tipos_de_datos_por_columna)
-
-# Filtrar las filas que contienen al menos un valor vacío
-filtered_dataset <- dataset[apply(dataset, 1, function(row) any(row == "")), ]
-
-# Mostrar el resultado
-print(filtered_dataset)
