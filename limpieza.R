@@ -1,7 +1,9 @@
 dataset <- read.csv("completed_orders.csv")
 
+library(dplyr)
+
 #Eliminamos las columnas innecesarias
-dataset <- dataset[, !names(dataset) %in% c("buyer", "order_link", "includes")]
+dataset <- dataset[, !names(dataset) %in% c("order_link", "includes")]
 
 for (col in names(dataset)) {
   if (is.character(dataset[[col]])) {
@@ -39,5 +41,17 @@ gig_to_category <- c("do web automation bot" = 1,
 
 # Añadimos la columna category basada en la categoría del gig
 dataset$category <- gig_to_category[dataset$gig]
+
+dataset$date_ordered <- as.Date(dataset$date_ordered, format = "%d/%m/%Y")
+dataset$date_end <- as.Date(dataset$date_end, format = "%d/%m/%Y")
+
+# Definir la fecha de corte
+cutoff_date <- as.Date("2023-05-31")
+
+# Filtrar el dataframe
+dataset <- dataset %>%
+  filter(date_ordered > cutoff_date)
+dataset <- dataset %>%
+  filter(date_end > cutoff_date)
 
 write.csv(dataset, "clean_data.csv", row.names = FALSE)
