@@ -22,7 +22,19 @@ repeated_buyers_summary <- repeated_buyers %>%
   group_by(category) %>%
   summarise(repeated_count = n())
 
-ggplot(repeated_buyers_summary, aes(x = factor(category), y = repeated_count)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  labs(title = "Número de Buyers Repetidos por Categoría", x = "Categoría", y = "Número de Buyers Repetidos") +
+ggplot(repeated_buyers_summary, aes(x = factor(category), y = repeated_count, fill = factor(category))) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("1" = "#240750", "2" = "#344C64", "3" = "red", 
+                               "4" = "green", "5" = "#577B8D", "6" = "#57A6A1"),
+                    labels = c("1" = "Web Scraping", 
+                               "2" = "Web Development", 
+                               "3" = "Summary", 
+                               "4" = "Email Automation", 
+                               "5" = "Flask", 
+                               "6" = "Automation"),
+                    name = "Categorías") +
+  labs(title = "Número de Compradores Repetidos por Categoría", 
+       x = "Categoría", 
+       y = "Número de Buyers Repetidos") +
   theme_minimal()
+

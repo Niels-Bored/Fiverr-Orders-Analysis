@@ -21,7 +21,16 @@ result <- dataset %>%
   summarise(total_days = sum(days_elapsed, na.rm = TRUE))
 
 # Creamos la visualización
-ggplot(result, aes(x = factor(category), y = total_days)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
+ggplot(result, aes(x = factor(category), y = total_days, fill = factor(category))) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("1" = "red", "2" = "green", "3" = "blue", 
+                               "4" = "skyblue", "5" = "yellow", "6" = "orange"),
+                    labels = c("1" = "Web Scraping", 
+                               "2" = "Web Development", 
+                               "3" = "Summary", 
+                               "4" = "Email Automation", 
+                               "5" = "Flask", 
+                               "6" = "Automation"),
+                    name = "Categoría") +  
   labs(title = "Total de Días Dedicados Por Categoría", x = "Categoría", y = "Días Dedicados") +
   theme_minimal()
